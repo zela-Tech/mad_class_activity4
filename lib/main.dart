@@ -26,6 +26,8 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
+  static const int _maxLimit = 100;
+
   //initial couter value
   int _counter = 0;
   int _customIncrement = 1;
@@ -34,9 +36,12 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   void _incrementCounter() {
     setState(() {
-      _counter += _customIncrement;
+      if (_counter + _customIncrement <= _maxLimit) {
+        _counter += _customIncrement;
+      }
     });
   }
+
   void _decrementCounter() {
     setState(() {
       if (_counter > 0) {
@@ -70,12 +75,23 @@ class _CounterWidgetState extends State<CounterWidget> {
             child: Container(
               color: Colors.blue,
               child: Text(
-                //displays the current number
                 '$_counter',
                 style: TextStyle(fontSize: 50.0),
               ),
             ),
           ),
+          if (_counter >= _maxLimit)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Maximum limit reached!',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           Slider(
             min: 0,
             max: 100,
