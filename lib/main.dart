@@ -28,10 +28,13 @@ class CounterWidget extends StatefulWidget {
 class _CounterWidgetState extends State<CounterWidget> {
   //initial couter value
   int _counter = 0;
+  int _customIncrement = 1;
+  
+  TextEditingController _incrementController = TextEditingController();
 
   void _incrementCounter() {
     setState(() {
-      _counter++;
+      _counter += _customIncrement;
     });
   }
   void _decrementCounter() {
@@ -46,6 +49,12 @@ class _CounterWidgetState extends State<CounterWidget> {
     setState(() {
       _counter = 0;
     });
+  }
+
+  @override
+  void dispose() {
+    _incrementController.dispose();
+    super.dispose();
   }
 
   @override
@@ -79,7 +88,28 @@ class _CounterWidgetState extends State<CounterWidget> {
             activeColor: Colors.blue,
             inactiveColor: Colors.red,
           ),
-         SizedBox(height: 20),
+
+          SizedBox(height: 20),
+          
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+            child: TextField(
+              controller: _incrementController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Custom Increment Value',
+                hintText: 'Enter increment value (e.g., 5)',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _customIncrement = int.tryParse(value) ?? 1;
+                });
+              },
+            ),
+          ),
+          SizedBox(height:20),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
