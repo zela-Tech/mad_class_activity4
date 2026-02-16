@@ -31,6 +31,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   //initial couter value
   int _counter = 0;
   int _customIncrement = 1;
+  List<int> _counterHistory = [];
   
   TextEditingController _incrementController = TextEditingController();
 
@@ -38,6 +39,12 @@ class _CounterWidgetState extends State<CounterWidget> {
     if (_counter == 0) return Colors.red;
     if (_counter > 50) return Colors.green;
     return Colors.black;
+  }
+  
+  void _saveToHistory() {
+    setState(() {
+      _counterHistory.add(_counter);
+    });
   }
 
   void _incrementCounter() {
