@@ -40,17 +40,17 @@ class _CounterWidgetState extends State<CounterWidget> {
     if (_counter > 50) return Colors.green;
     return Colors.black;
   }
-  
+
   void _saveToHistory() {
-    setState(() {
-      _counterHistory.add(_counter);
-    });
+    _counterHistory.add(_counter);
+    
   }
 
   void _incrementCounter() {
     setState(() {
       if (_counter + _customIncrement <= _maxLimit) {
         _counter += _customIncrement;
+        _saveToHistory();
       }
     });
   }
@@ -59,6 +59,7 @@ class _CounterWidgetState extends State<CounterWidget> {
     setState(() {
       if (_counter > 0) {
         _counter--;
+        _saveToHistory();
       }
     });
   }
@@ -66,6 +67,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   void _resetCounter() {
     setState(() {
       _counter = 0;
+      _saveToHistory();
     });
   }
 
@@ -119,6 +121,7 @@ class _CounterWidgetState extends State<CounterWidget> {
             onChanged: (double value) {
               setState(() {
                 _counter = value.toInt();
+                _saveToHistory();
               });
             },
             activeColor: Colors.blue,
@@ -171,6 +174,39 @@ class _CounterWidgetState extends State<CounterWidget> {
                 ),
               ),
             ],
+          ),
+
+          SizedBox(height: 20),
+
+          Text(
+            'Counter History:',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10),
+          Container(
+            height: 100,
+            child: _counterHistory.isEmpty
+                ? Center(child: Text('No history yet'))
+                : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _counterHistory.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.blue[200],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${_counterHistory[index]}',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
