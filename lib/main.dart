@@ -29,6 +29,12 @@ class _CounterWidgetState extends State<CounterWidget> {
   //initial couter value
   int _counter = 0;
 
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +65,14 @@ class _CounterWidgetState extends State<CounterWidget> {
             },
             activeColor: Colors.blue,
             inactiveColor: Colors.red,
+          ),
+          SizedBox(height:20),
+          ElevatedButton(
+            onPressed: _incrementCounter,
+            child: Text('Increment'),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+            ),
           ),
         ],
       ),
