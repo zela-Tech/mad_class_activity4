@@ -71,6 +71,18 @@ class _CounterWidgetState extends State<CounterWidget> {
     });
   }
 
+  void _undoCounter() {
+    setState(() {
+      if (_counterHistory.length > 1) {
+        _counterHistory.removeLast(); // Remove curr value
+        _counter = _counterHistory.last; // Set to prev value
+      } else if (_counterHistory.length == 1) {
+        _counter = 0;
+        _counterHistory.clear();
+      }
+    });
+  }
+
   @override
   void dispose() {
     _incrementController.dispose();
@@ -174,6 +186,15 @@ class _CounterWidgetState extends State<CounterWidget> {
                 ),
               ),
             ],
+          ),
+          SizedBox(height: 10),
+          ElevatedButton.icon(
+            onPressed: _counterHistory.isEmpty ? null : _undoCounter,
+            icon: Icon(Icons.undo),
+            label: Text('Undo'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purple,
+            ),
           ),
 
           SizedBox(height: 20),
