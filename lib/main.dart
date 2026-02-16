@@ -34,6 +34,19 @@ class _CounterWidgetState extends State<CounterWidget> {
       _counter++;
     });
   }
+  void _decrementCounter() {
+    setState(() {
+      if (_counter > 0) {
+        _counter--;
+      }
+    });
+  }
+
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +79,32 @@ class _CounterWidgetState extends State<CounterWidget> {
             activeColor: Colors.blue,
             inactiveColor: Colors.red,
           ),
-          SizedBox(height:20),
-          ElevatedButton(
-            onPressed: _incrementCounter,
-            child: Text('Increment'),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-            ),
+         SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: _decrementCounter,
+                child: Text('Decrement'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: _incrementCounter,
+                child: Text('Increment'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: _resetCounter,
+                child: Text('Reset'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+              ),
+            ],
           ),
         ],
       ),
