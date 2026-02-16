@@ -34,6 +34,12 @@ class _CounterWidgetState extends State<CounterWidget> {
   
   TextEditingController _incrementController = TextEditingController();
 
+  Color get counterColor {
+    if (_counter == 0) return Colors.red;
+    if (_counter > 50) return Colors.green;
+    return Colors.black;
+  }
+
   void _incrementCounter() {
     setState(() {
       if (_counter + _customIncrement <= _maxLimit) {
@@ -73,10 +79,15 @@ class _CounterWidgetState extends State<CounterWidget> {
         children: [
           Center(
             child: Container(
-              color: Colors.blue,
+              color: Colors.blue[100],
+              padding: EdgeInsets.all(20),
               child: Text(
                 '$_counter',
-                style: TextStyle(fontSize: 50.0),
+                style: TextStyle(
+                  fontSize: 50.0,
+                  color: counterColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -92,6 +103,8 @@ class _CounterWidgetState extends State<CounterWidget> {
                 ),
               ),
             ),
+          SizedBox(height:20),
+
           Slider(
             min: 0,
             max: 100,
