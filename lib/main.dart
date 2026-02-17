@@ -162,8 +162,15 @@ class _CounterWidgetState extends State<CounterWidget> {
             value: _counter.toDouble(),
             onChanged: (double value) {
               setState(() {
+                int oldCounter = _counter;
                 _counter = value.toInt();
                 _saveToHistory();
+                //check taaegets
+                if ((oldCounter < 50 && _counter >= 50 && !_targetsReached.contains(50)) || (oldCounter < 100 && _counter >= 100 && !_targetsReached.contains(100))) {
+                  int target = _counter >= 100 ? 100 : 50;
+                  _targetsReached.add(target);
+                  _showSuccessDialog(target);
+                }
               });
             },
             activeColor: Colors.blue,
