@@ -31,7 +31,9 @@ class _CounterWidgetState extends State<CounterWidget> {
   //initial couter value
   int _counter = 0;
   int _customIncrement = 1;
+
   List<int> _counterHistory = [];
+  Set<int> _targetsReached = {};
   
   TextEditingController _incrementController = TextEditingController();
 
@@ -51,6 +53,14 @@ class _CounterWidgetState extends State<CounterWidget> {
       if (_counter + _customIncrement <= _maxLimit) {
         _counter += _customIncrement;
         _saveToHistory();
+        
+        // Check for target milestones
+        if ((_counter >= 50 && !_targetsReached.contains(50)) ||
+            (_counter >= 100 && !_targetsReached.contains(100))) {
+          int target = _counter >= 100 ? 100 : 50;
+          _targetsReached.add(target);
+          _showSuccessDialog(target);
+        }
       }
     });
   }
@@ -81,6 +91,26 @@ class _CounterWidgetState extends State<CounterWidget> {
         _counterHistory.clear();
       }
     });
+  }
+
+  void _showSuccessDialog(int target) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('🎉 Congratulations 🎉'),
+          content: Text('You have reached $target!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
