@@ -36,7 +36,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   Set<int> _targetsReached = {};
   
   TextEditingController _incrementController = TextEditingController();
-
+  //Implement counterColor getter for dynamic text color
   Color get counterColor {
     if (_counter == 0) return Colors.red;
     if (_counter > 50) return Colors.green;
@@ -64,7 +64,7 @@ class _CounterWidgetState extends State<CounterWidget> {
       }
     });
   }
-
+  //Decrease the counter value with a limit of 0
   void _decrementCounter() {
     setState(() {
       if (_counter > 0) {
@@ -74,6 +74,7 @@ class _CounterWidgetState extends State<CounterWidget> {
     });
   }
 
+  //Reset the counter back to 0, regardless of the curr value.
   void _resetCounter() {
     setState(() {
       _counter = 0;
@@ -178,7 +179,7 @@ class _CounterWidgetState extends State<CounterWidget> {
           ),
 
           SizedBox(height: 20),
-          
+          // text input field where users can enter a custom increment value
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
             child: TextField(
